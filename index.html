@@ -1,0 +1,502 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Better Text Me — Александр Дидык, копирайтер</title>
+<meta name="description" content="BTM — копирайтинг для Telegram: нативная реклама, крипта и Web3, контент для IT-аудитории.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo+Black&family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root{
+  --btm-red:#D01F1F;
+  --ads-yellow:#F5DE13;
+  --content-blue:#1A34A8;
+  --ink:#111111;
+  --paper:#EFEDE8;
+  --white:#ffffff;
+  --muted:#68655F; /* fallback */
+  --rule:#CFCBC2;
+  --zone-ads:#F4EEDD;      /* тёплый песочный — реклама */
+  --zone-content:#E9ECF3;  /* прохладный сине-серый — контент */
+  --zone-hero:#EFEDE8;     /* нейтральный — вступление */
+  --active-bg:#EFEDE8;     /* стартовый фон, меняется при скролле */
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--active-bg);
+  transition:background-color 800ms cubic-bezier(0.25,1,0.5,1);
+  will-change:background-color;color:var(--ink);
+  font-family:'Archivo',system-ui,sans-serif;
+  font-size:16px;line-height:1.6;-webkit-font-smoothing:antialiased;
+}
+.wrap{max-width:1040px;margin:0 auto;padding:0 24px}
+.mono{font-family:'IBM Plex Mono',monospace}
+
+/* ---------- NAV ---------- */
+nav{
+  position:sticky;top:0;z-index:50;
+  background:var(--active-bg);transition:background-color 800ms cubic-bezier(0.25,1,0.5,1);border-bottom:1px solid var(--ink);
+}
+.nav-in{max-width:900px;margin:0 auto;padding:12px 24px;display:flex;align-items:center;gap:18px;flex-wrap:wrap}
+.brand{display:flex;align-items:center;gap:10px;font-family:'Archivo Black',sans-serif;font-size:15px;letter-spacing:-.01em}
+.brand img{width:26px;height:26px;display:block}
+.nav-links{display:flex;gap:16px;margin-left:auto;flex-wrap:wrap}
+.nav-links a{
+  font-family:'IBM Plex Mono',monospace;font-size:12.5px;
+  text-transform:uppercase;letter-spacing:.08em;
+  color:var(--ink);text-decoration:none;padding:4px 0;border-bottom:2px solid transparent;
+}
+.nav-links a:hover,.nav-links a:focus-visible{border-bottom-color:var(--btm-red)}
+
+/* ---------- HERO ---------- */
+header{padding:64px 0 48px;border-bottom:3px solid var(--ink)}
+.hero-mark{
+  width:78px;height:78px;
+  display:flex;align-items:center;justify-content:center;margin-bottom:26px;
+}
+.hero-mark img{width:100%;height:100%;object-fit:contain}
+h1{
+  font-family:'Archivo Black',sans-serif;
+  font-size:clamp(38px,7.5vw,76px);line-height:.98;
+  letter-spacing:-.035em;text-transform:uppercase;margin-bottom:22px;
+}
+h1 .red{color:var(--btm-red)}
+.lede{font-size:clamp(17px,2.2vw,20px);max-width:56ch;color:#2a2724}
+.stats{
+  display:grid;grid-template-columns:repeat(auto-fit,minmax(140px,1fr));
+  gap:1px;background:var(--ink);border:1px solid var(--ink);margin-top:38px;
+}
+.stat{background:var(--zone-hero);padding:15px 16px}
+.stat b{display:block;font-family:'Archivo Black',sans-serif;font-size:23px;letter-spacing:-.02em}
+.stat span{font-family:'IBM Plex Mono',monospace;font-size:11.5px;color:var(--muted);letter-spacing:.02em}
+
+/* ---------- SECTION ---------- */
+section{padding:64px 0}
+
+
+
+/* accent bar under each section tag */
+.tag.ads{box-shadow:0 3px 0 var(--ads-yellow)}
+/* left accent line on post cards, colored per zone */
+#ads .work{border-left:3px solid var(--ads-yellow);padding-left:16px}
+#content .work{border-left:3px solid var(--content-blue);padding-left:16px}
+#crypto .work{border-left:3px solid var(--btm-red);padding-left:16px}
+/* нейтральная прослойка на стыке красной и синей зон (против хромостереопсиса) */
+section#content{position:relative}
+section#content::before{content:"";position:absolute;top:0;left:0;right:0;height:48px;background:linear-gradient(var(--zone-hero),transparent);pointer-events:none}
+#ads .embed-fallback,#content .embed-fallback{background:var(--white)}
+/* stat card bg follows hero zone */
+.tag{
+  display:inline-block;font-family:'Archivo Black',sans-serif;
+  font-size:clamp(24px,4vw,34px);letter-spacing:-.02em;text-transform:uppercase;
+  padding:5px 16px;margin-bottom:14px;
+}
+.tag.ads{background:var(--ads-yellow);color:var(--ink)}
+.tag.content{background:var(--content-blue);color:var(--white)}
+.tag.crypto{background:var(--btm-red);color:var(--white)}
+.tag.plain{background:var(--ink);color:var(--paper)}
+.sec-note{font-size:15px;color:rgba(28,27,25,.60);max-width:64ch;line-height:1.6;margin-bottom:32px}
+
+/* ---------- WORK ITEM ---------- */
+.works-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px;margin-top:6px}
+.work{margin:0;padding:0;border:none}
+.subtag{
+  grid-column:1/-1;margin:22px 0 8px;
+  font-family:'Archivo Black',sans-serif;
+  font-size:22px;font-weight:900;letter-spacing:-.01em;color:var(--ink);
+  padding-bottom:8px;border-bottom:3px solid var(--ink);
+}
+.subtag:first-child{margin-top:0}
+@media (max-width:680px){.works-grid{grid-template-columns:1fr}}
+.work-title{font-weight:700;font-size:18px;line-height:1.3;margin-bottom:10px}
+.metrics{display:flex;flex-wrap:wrap;gap:7px;margin-bottom:12px}
+.metric{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;font-weight:500;
+  border:1.5px solid var(--ink);padding:4px 9px;
+}
+.task{font-size:14.5px;color:var(--muted);padding-left:13px;border-left:3px solid var(--btm-red);margin-bottom:16px}
+.worked{font-size:14.5px;margin-top:14px}
+.post-text{background:#faf8f4;border:1px solid #e8e3d9;padding:16px 18px;font-size:14.5px;margin-bottom:14px}
+.post-text p{margin-bottom:9px}
+.post-text p:last-child{margin-bottom:0}
+.post-text b{font-weight:600}
+.worked b{
+  font-family:'IBM Plex Mono',monospace;font-size:11.5px;
+  text-transform:uppercase;letter-spacing:.1em;display:block;margin-bottom:4px;color:var(--btm-red);
+}
+.embed{margin:14px 0;min-height:60px}
+.embed-fallback{
+  font-family:'IBM Plex Mono',monospace;font-size:13px;
+  padding:12px 14px;background:var(--white);border:1px solid var(--rule);
+}
+.embed-fallback a{color:var(--btm-red)}
+
+/* ---------- SERVICES ---------- */
+.services{display:grid;grid-template-columns:repeat(auto-fit,minmax(230px,1fr));gap:22px}
+.svc{border-top:4px solid var(--ink);padding-top:13px}
+.svc h3{font-size:16px;font-weight:700;margin-bottom:5px}
+.svc p{font-size:14.5px;color:var(--muted)}
+
+/* ---------- SKILLS ---------- */
+.skills{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:0 34px}
+.srow{display:flex;gap:12px;font-size:15px;padding:11px 0;border-bottom:1px solid var(--rule)}
+.srow dt{
+  font-family:'IBM Plex Mono',monospace;font-size:12px;text-transform:uppercase;
+  letter-spacing:.06em;color:var(--muted);min-width:88px;padding-top:3px;
+}
+.srow dd{flex:1}
+
+/* ---------- FOOTER ---------- */
+footer{background:var(--ink);color:var(--paper);padding:64px 0 56px}
+.cta{
+  font-family:'Archivo Black',sans-serif;
+  font-size:clamp(30px,6vw,58px);line-height:1;letter-spacing:-.03em;
+  text-transform:uppercase;margin-bottom:30px;
+}
+.cta .red{color:var(--btm-red)}
+.links{display:flex;flex-wrap:wrap;gap:12px}
+.links a{
+  font-family:'IBM Plex Mono',monospace;font-size:14px;
+  color:var(--paper);text-decoration:none;
+  border:2px solid var(--paper);padding:12px 22px;
+  transition:background .15s,color .15s;
+}
+.links a:hover,.links a:focus-visible{background:var(--paper);color:var(--ink)}
+.links a:focus-visible{outline:2px solid var(--ads-yellow);outline-offset:3px}
+.fine{margin-top:26px;font-size:13.5px;color:#9a958d}
+
+@media (max-width:600px){
+  header{padding:44px 0 34px}
+  section{padding:44px 0}
+  .nav-links{gap:12px}
+}
+@media (prefers-reduced-motion:reduce){*{transition:none!important;scroll-behavior:auto!important}}
+</style>
+</head>
+<body>
+
+<nav>
+  <div class="nav-in">
+    <div class="brand"><img src="logo.png" alt=""> BETTER TEXT ME</div>
+    <div class="nav-links">
+      <a href="#ads">Нативка</a>
+      <a href="#crypto">Крипта</a>
+      <a href="#content">Контент</a>
+      <a href="#contact">Контакты</a>
+    </div>
+  </div>
+</nav>
+
+<header data-bg="#EFEDE8">
+  <div class="wrap">
+    <h1>Тексты, которые<br><span class="red">дочитывают</span></h1>
+    <p class="lede">
+      Александр Дидык. Три года пишу для Telegram: нативная реклама по брифам крупных брендов,
+      аналитика по крипте и финтеху, контент для IT-аудитории.
+    </p>
+    <div class="stats">
+      <div class="stat"><b>1000+</b><span>материалов по брифам</span></div>
+      <div class="stat"><b>40+</b><span>каналов-площадок</span></div>
+      <div class="stat"><b>3+ ГОДА</b><span>в крипте и финтехе</span></div>
+      <div class="stat"><b>30–60 МИН</b><span>текст под инфоповод</span></div>
+    </div>
+  </div>
+</header>
+
+<!-- ============ ADS ============ -->
+<section id="ads" data-bg="#F4EEDD">
+  <div class="wrap">
+    <div class="tag ads">ADS.</div>
+    <p class="sec-note">
+      Нативная реклама по брифам крупных брендов — МТС, HONOR, Т-Банк, Сбер, Авито, ЦБ и другие.
+      Все посты опубликованы в реальных Telegram-каналах.
+    </p>
+    <div class="works-grid">
+
+
+    <div class="subtag">Бренды и технологии</div>
+    <div class="work">
+      <div class="work-title">МТС · бесплатная связь при покупке смартфона</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="mosnoow/11202" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/mosnoow/11202">t.me/mosnoow/11202</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">HONOR Magic V2 · обзор флагмана</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="eruditurl24/6391" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/eruditurl24/6391">t.me/eruditurl24/6391</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Т-Банк · ребрендинг Тинькофф</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="technomotel/2143" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/technomotel/2143">t.me/technomotel/2143</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Холдинг Т1 · IT-конференция «Импульс»</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="conhum/7039" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/conhum/7039">t.me/conhum/7039</a></div></noscript>
+      </div>
+    </div>
+    <div class="subtag">Финансы и финтех</div>
+    <div class="work">
+      <div class="work-title">ЦБ · будущее цифрового рубля</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="finadvisora/4110" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/finadvisora/4110">t.me/finadvisora/4110</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Easypay.World · карты для оплаты за границей</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="business_ru/13460" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/business_ru/13460">t.me/business_ru/13460</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">УК «Первая» · инвестиционный счёт ИИС-3</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="bezposhady/12402" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/bezposhady/12402">t.me/bezposhady/12402</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Авито Путешествия · прогноз рынка до 2030</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="fourbes/16993" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/fourbes/16993">t.me/fourbes/16993</a></div></noscript>
+      </div>
+    </div>
+    <div class="subtag">Маркетинг и бренд-кейсы</div>
+    <div class="work">
+      <div class="work-title">Daniel Wellington · маркетинг-кейс</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="PopsMarketing/8318" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/PopsMarketing/8318">t.me/PopsMarketing/8318</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Авито · конференция «Новые русские бренды»</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="marzaganoff/4946" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/marzaganoff/4946">t.me/marzaganoff/4946</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">КОМРЕДА × donego · креативный видеокейс</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="malepeg/7412" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/malepeg/7412">t.me/malepeg/7412</a></div></noscript>
+      </div>
+    </div>
+    <div class="subtag">Лайфстайл, культура, тревел</div>
+    <div class="work">
+      <div class="work-title">GARAGE FEST · автоспортивный фестиваль</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="piterburg/4201" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/piterburg/4201">t.me/piterburg/4201</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Mriya Resort & Spa (Сбер) · премиум-курорт</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="tr_media/4335" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/tr_media/4335">t.me/tr_media/4335</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">РУВИКИ × Музей Москвы · культурная коллаборация</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="moskuda/8992" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/moskuda/8992">t.me/moskuda/8992</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Road trip по Намибии · тревел</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="dollartrip24/4373" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/dollartrip24/4373">t.me/dollartrip24/4373</a></div></noscript>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+<!-- ============ CONTENT ============ -->
+<section id="crypto" data-bg="#F6ECEC">
+  <div class="wrap">
+    <div class="tag crypto">CRYPTO.</div>
+    <p class="sec-note">
+      Аналитика криптовалют, NFT и Web3 — более 1500 материалов за 3 года. Все посты опубликованы в рабочих каналах.
+    </p>
+    <div class="works-grid">
+    <div class="work">
+      <div class="work-title">Флор BAYC упал до 20-месячного минимума</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="nft_reality/4209" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/nft_reality/4209">t.me/nft_reality/4209</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Продажи NFT на Solana обогнали Ethereum</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="nft_reality/5001" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/nft_reality/5001">t.me/nft_reality/5001</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">SEC против Coinbase и Binance</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="easymarketcrypto/2405" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/easymarketcrypto/2405">t.me/easymarketcrypto/2405</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">OpenSea выпустит токен $SEA</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="nft_reality/5889" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/nft_reality/5889">t.me/nft_reality/5889</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Гайд: как создать NFT на OpenSea Studio</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="nft_reality/4681" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/nft_reality/4681">t.me/nft_reality/4681</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Как зарабатывать на крипте, когда рынок падает</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="nft_reality/6165" data-width="100%" data-color="D01F1F"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/nft_reality/6165">t.me/nft_reality/6165</a></div></noscript>
+      </div>
+    </div>
+    </div>
+  </div>
+</section>
+
+<section id="content" data-bg="#E9ECF3">
+  <div class="wrap">
+    <div class="tag content">CONTENT.</div>
+    <p class="sec-note">
+      Контент для IT-аудитории — авторский канал, который я вёл сам: обзоры инструментов,
+      кибербезопасность, приватность, разборы схем.
+    </p>
+    <div class="works-grid">
+    <div class="work">
+      <div class="work-title">Bruno · инструмент для работы с API</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="trojan_anonym/4361" data-width="100%" data-color="1A34A8"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/trojan_anonym/4361">t.me/trojan_anonym/4361</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Qu1cksc0pe · анализ файлов на вредоносное ПО</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="trojan_anonym/4330" data-width="100%" data-color="1A34A8"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/trojan_anonym/4330">t.me/trojan_anonym/4330</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">CalyxOS · Android без слежки Google</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="trojan_anonym/4332" data-width="100%" data-color="1A34A8"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/trojan_anonym/4332">t.me/trojan_anonym/4332</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">AxCrypt · шифрование файлов и папок</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="trojan_anonym/4363" data-width="100%" data-color="1A34A8"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/trojan_anonym/4363">t.me/trojan_anonym/4363</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Runable · универсальный ИИ-агент</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="trojan_anonym/4338" data-width="100%" data-color="1A34A8"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/trojan_anonym/4338">t.me/trojan_anonym/4338</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">FontBase · менеджер шрифтов</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="trojan_anonym/4340" data-width="100%" data-color="1A34A8"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/trojan_anonym/4340">t.me/trojan_anonym/4340</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Автоматизация Google Docs через шорткаты</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="trojan_anonym/4365" data-width="100%" data-color="1A34A8"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/trojan_anonym/4365">t.me/trojan_anonym/4365</a></div></noscript>
+      </div>
+    </div>
+    <div class="work">
+      <div class="work-title">Как улучшить звук в беспроводных наушниках</div>
+      <div class="embed"><script async src="https://telegram.org/js/telegram-widget.js?22" data-telegram-post="trojan_anonym/4302" data-width="100%" data-color="1A34A8"></script>
+        <noscript><div class="embed-fallback">Пост: <a href="https://t.me/trojan_anonym/4302">t.me/trojan_anonym/4302</a></div></noscript>
+      </div>
+    </div>
+
+
+
+
+
+
+
+
+    </div>
+  </div>
+</section>
+
+<!-- ============ EXPERIENCE ============ -->
+<section data-bg="#EFEDE8">
+  <div class="wrap">
+    <div class="tag plain">Что я делал</div>
+    <div class="services" style="margin-top:26px">
+      <div class="svc">
+        <h3>Вёл Telegram-каналы</h3>
+        <p>Полный редакционный цикл: контент-план, тексты, рубрики, публикация, аналитика.</p>
+      </div>
+      <div class="svc">
+        <h3>Писал нативную рекламу</h3>
+        <p>Интеграции по брифам крупных брендов — с соблюдением тона площадки и требований рекламодателя.</p>
+      </div>
+      <div class="svc">
+        <h3>Объяснял сложное просто</h3>
+        <p>Финансы, крипта, регулирование, технологии: переводил сложные темы на простой язык.</p>
+      </div>
+      <div class="svc">
+        <h3>Работал в жёстких сроках</h3>
+        <p>Готовил материал под инфоповод за 30–60 минут.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ============ SKILLS ============ -->
+<section data-bg="#EFEDE8">
+  <div class="wrap">
+    <div class="tag plain">Инструменты</div>
+    <dl class="skills" style="margin-top:26px">
+      <div class="srow"><dt>Форматы</dt><dd>Посты, нативные интеграции, рекламные креативы, лонгриды, редактура</dd></div>
+      <div class="srow"><dt>Реклама</dt><dd>Telegram Ads (лимит 160 символов), рекламные воронки, ситуативный маркетинг, A/B-тестирование</dd></div>
+      <div class="srow"><dt>Аналитика</dt><dd>TGStat, Telemetr, работа с ER, охватами, индексом цитирования</dd></div>
+      <div class="srow"><dt>AI</dt><dd>Claude, Gemini, ChatGPT, NotebookLM — фактчекинг, анализ, ускорение производства</dd></div>
+      <div class="srow"><dt>Ниши</dt><dd>Криптовалюты, Web3, DeFi, финтех, SaaS, IT-сервисы</dd></div>
+      <div class="srow"><dt>Языки</dt><dd>Украинский — родной, русский — свободно, английский — B1</dd></div>
+    </dl>
+  </div>
+</section>
+
+<!-- ============ CONTACT ============ -->
+<footer id="contact" data-bg="#EFE7Dd">
+  <div class="wrap">
+    <p class="cta">Нужен текст,<br>который <span class="red">работает?</span></p>
+    <div class="links">
+      <a href="https://t.me/arnsvald">Telegram</a>
+      <a href="mailto:arnsvald@protonmail.com">Почта</a>
+      <a href="CV.pdf">Резюме PDF</a>
+    </div>
+    <p class="fine">Дополнительные примеры работ и доступ к каналам — по запросу. Готов выполнить тестовое задание.</p>
+  </div>
+</footer>
+
+
+<script>
+(function(){
+  var root=document.documentElement;
+  var obs=new IntersectionObserver(function(entries){
+    entries.forEach(function(e){
+      if(e.isIntersecting){
+        var c=e.target.getAttribute('data-bg');
+        if(c) root.style.setProperty('--active-bg',c);
+      }
+    });
+  },{root:null,rootMargin:'-50% 0px -50% 0px',threshold:0});
+  document.querySelectorAll('[data-bg]').forEach(function(s){obs.observe(s);});
+})();
+</script>
+</body>
+</html>
